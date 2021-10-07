@@ -1,0 +1,6 @@
+[submodule "fe"]
+	path = fe
+	url = git@github.com:munichdeveloper/cakedefi-dashboard-fe.git
+[submodule "be"]
+	path = be
+	url = git@github.com:munichdeveloper/cakedefidashboard.git
