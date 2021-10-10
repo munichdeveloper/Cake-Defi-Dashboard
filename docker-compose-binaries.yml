@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+
+  be:
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+    image: maven
+    restart: always
+    working_dir: /home
+    environment:
+      - TZ=Europe/Berlin
+    command: bash -c "java -Duser.timezone=Europe/Berlin -Dspring.profiles.active=h2 -jar binaries/cakedashboard.jar"
+
+    volumes:
+      - ./binaries:/home/binaries
+
+  fe:
+    build: fe/binaries
+    depends_on:
+      - be
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+    ports:
+      - "80:80"
+    environment:
+      TZ: Europe/Berlin
+    restart: always
+
+
+
