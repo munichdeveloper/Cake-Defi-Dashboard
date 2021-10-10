@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+
+  be:
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+    image: maven
+    restart: always
+    working_dir: /home
+    environment:
+      - TZ=Europe/Berlin
+    command: bash -c "mvn clean install -DskipTests=true && java -Duser.timezone=Europe/Berlin -Dspring.profiles.active=h2 -jar target/cakedashboard.jar"
+
+    volumes:
+      - ./be:/home
+
+  fe:
+    build: fe
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "1"
+    ports:
+      - "80:80"
+    environment:
+      TZ: Europe/Berlin
+    restart: always
+
+
+
